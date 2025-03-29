@@ -1,15 +1,15 @@
 import {createContext, FC, PropsWithChildren, useContext, useState} from "react";
 
 interface ITreeContext {
-    setSelectedId: (id: string) => void
-    selectedId: string | null;
-    checkIsIdSelected: (id: string) => boolean;
+    setSelectedId: (id: number) => void
+    selectedId: number | null;
+    checkIsIdSelected: (id: number) => boolean;
 }
 
 const TreeContext = createContext<ITreeContext | null>(null);
 
 const TreeContextProvider: FC<PropsWithChildren> = ({children}) => {
-    const [selectedId, setSelectedId] = useState<string | null>(null)
+    const [selectedId, setSelectedId] = useState<number | null>(null)
 
     const value: ITreeContext = {
         setSelectedId,
