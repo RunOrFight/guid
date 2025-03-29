@@ -1,4 +1,4 @@
-import {EditableTree} from "./Components/EditableTree.tsx";
+import {EditableTree} from "./Components/Tree/Tree.tsx";
 
 const App = () => {
     return <EditableTree/>
