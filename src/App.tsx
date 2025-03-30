@@ -1,7 +1,7 @@
-import {EditableTree} from "./Components/Tree/Tree.tsx";
+import {UserTree} from "./Components/UserTree/UserTree.tsx";
 
 const App = () => {
-    return <EditableTree/>
+    return <UserTree/>
 }
 
 export {App}

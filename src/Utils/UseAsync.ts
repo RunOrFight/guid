@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 
-const useHttpApi = <Args extends any[], Response>(call: (...args: Args) => Promise<Response>, ...args: Args) => {
+const useAsync = <Args extends any[], Response>(call: (...args: Args) => Promise<Response>, ...args: Args) => {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
     const [data, setData] = useState<Response | null>(null)
@@ -23,4 +23,4 @@ const useHttpApi = <Args extends any[], Response>(call: (...args: Args) => Promi
     return {loading, error, data: data}
 }
 
-export {useHttpApi}
+export {useAsync}

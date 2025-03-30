@@ -1,6 +1,12 @@
 import {createContext, FC, PropsWithChildren, useContext, useState} from "react";
+import {ITreeItem} from "./ITreeItem.tsx";
 
-interface ITreeContext {
+interface ITreeApi {
+    getRootNode: () => Promise<ITreeItem>
+    createNode: (parentNodeId: number, nodeName: string) => Promise<boolean>
+}
+
+interface ITreeContext extends ITreeApi {
     setSelectedId: (id: number) => void
     selectedId: number | null;
     checkIsIdSelected: (id: number) => boolean;
@@ -8,13 +14,15 @@ interface ITreeContext {
 
 const TreeContext = createContext<ITreeContext | null>(null);
 
-const TreeContextProvider: FC<PropsWithChildren> = ({children}) => {
+const TreeContextProvider: FC<PropsWithChildren<ITreeApi>> = ({children, createNode, getRootNode}) => {
     const [selectedId, setSelectedId] = useState<number | null>(null)
 
     const value: ITreeContext = {
         setSelectedId,
         selectedId,
         checkIsIdSelected: (id) => selectedId === id,
+        createNode,
+        getRootNode
     }
 
     return <TreeContext value={value}>
@@ -36,3 +44,5 @@ export {
     TreeContextProvider,
     useTreeContext
 }
+
+export type {ITreeApi}

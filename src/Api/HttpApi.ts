@@ -24,7 +24,7 @@ const HttpApi = {
         createUserTreeNodeUrl.searchParams.set("parentNodeId", parentNodeId.toString());
         createUserTreeNodeUrl.searchParams.set("nodeName", nodeName);
 
-        return fetch(getUserTreeUrl, {
+        return fetch(createUserTreeNodeUrl, {
             method: "POST",
         }).then(res => res.ok);
     }

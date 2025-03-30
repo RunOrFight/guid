@@ -29,7 +29,7 @@ const ModalContextProvider: FC<PropsWithChildren> = ({children}) => {
     }
 
     return <ModalContext value={value}>
-        {isModalOpened ? children : null}
+        {children}
     </ModalContext>
 }
 
