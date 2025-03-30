@@ -14,7 +14,7 @@ const TreeContextProvider: FC<PropsWithChildren> = ({children}) => {
     const value: ITreeContext = {
         setSelectedId,
         selectedId,
-        checkIsIdSelected: (id) => selectedId === id
+        checkIsIdSelected: (id) => selectedId === id,
     }
 
     return <TreeContext value={value}>

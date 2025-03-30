@@ -12,6 +12,7 @@ const useHttpApi = <Args extends any[], Response>(call: (...args: Args) => Promi
         call(...args).then((data) => {
             setData(data)
         }).catch((err) => {
+
             setError(err)
         }).finally(() => {
             setLoading(false)

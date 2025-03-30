@@ -83,7 +83,15 @@ const Tree: FC<ITreeProps> = ({rootItem}) => {
 const EditableTree = () => {
     const {data, loading, error} = useHttpApi(HttpApi.getUserTree, TREE_ID);
 
-    return data ? <Tree rootItem={data}/> : null;
+    if (error) {
+        return error
+    }
+
+    if (loading) {
+        return "..."
+    }
+
+    return data ? <Tree rootItem={data}/> : "No data";
 }
 
 export {EditableTree}
