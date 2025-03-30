@@ -8,6 +8,8 @@ import { withStopPropagation } from "../../Utils/WithStopPropagation.ts";
 import { useAsync } from "../../Utils/UseAsync.ts";
 import { Button } from "../Button/Button.tsx";
 import classes from "./Tree.module.css";
+import { Form } from "../Form/Form.tsx";
+import { Error } from "../Error/Error.tsx";
 
 type TDeleteTreeNodeFormProps = Pick<IModalContext, "closeModal"> &
   Pick<ITreeItem, "id" | "name">;
@@ -17,29 +19,32 @@ const DeleteTreeNodeForm = ({
   id,
   name,
 }: TDeleteTreeNodeFormProps) => {
-  const { deleteNode, getRootNode } = useTreeContext();
-  const { loading, data, error, trigger } = useAsync(deleteNode, id);
+  const { deleteNode, refreshTree } = useTreeContext();
+  const { loading, error, trigger } = useAsync(deleteNode);
 
-  const onSubmit = (e) => {
-    trigger();
-    e.preventDefault();
+  const onSubmit = () => {
+    trigger(id).then(() => {
+      refreshTree();
+      closeModal();
+    });
   };
 
   return (
-    <form onSubmit={onSubmit} className={classes.form}>
-      <div>{`Do you want to delete ${name}?`}</div>
-      <div className={classes.formBottom}>
+    <Form
+      onSubmit={onSubmit}
+      bottom={
         <Button
           type={"submit"}
           danger
           className={classes.danger}
           loading={loading}
-        >
-          {"Delete"}
-        </Button>
-      </div>
-      {error ? <div className={classes.error}>{error}</div> : null}
-    </form>
+          value={"Delete"}
+        />
+      }
+    >
+      <div>{`Do you want to delete ${name}?`}</div>
+      {error ? <Error>{error}</Error> : null}
+    </Form>
   );
 };
 

@@ -1,6 +1,7 @@
 import { FC } from "react";
 import classes from "./Field.module.css";
 import { Input } from "../Input/Input.tsx";
+import { Error } from "../Error/Error.tsx";
 
 interface IFieldProps {
   label: string;
@@ -14,7 +15,7 @@ const Field: FC<IFieldProps> = ({ label, id, error, onChange }) => {
     <div className={classes.field}>
       <label htmlFor={id}>{label}</label>
       <Input id={id} onChange={onChange} />
-      {error ? <div className={classes.error}>{error}</div> : null}
+      {error ? <Error>{error}</Error> : null}
     </div>
   );
 };

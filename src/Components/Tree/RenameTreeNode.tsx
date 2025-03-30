@@ -5,6 +5,10 @@ import { useTreeContext } from "./TreeContext.tsx";
 import { FC, useState } from "react";
 import { ITreeItem } from "./ITreeItem.tsx";
 import { withStopPropagation } from "../../Utils/WithStopPropagation.ts";
+import { Form } from "../Form/Form.tsx";
+import { Field } from "../Field/Field.tsx";
+import { Button } from "../Button/Button.tsx";
+import { useAsync } from "../../Utils/UseAsync.ts";
 
 type TRenameTreeNodeFormProps = Pick<IModalContext, "closeModal"> &
   Pick<ITreeItem, "id" | "name">;
@@ -14,25 +18,32 @@ const RenameTreeNodeForm = ({
   id,
   name,
 }: TRenameTreeNodeFormProps) => {
-  const { renameNode, getRootNode } = useTreeContext();
+  const { renameNode, refreshTree } = useTreeContext();
+  const { trigger, error, loading } = useAsync(renameNode);
 
   const [inputValue, setInputValue] = useState(name);
 
-  const onSubmit = (e) => {
-    renameNode(id, inputValue).then(getRootNode).then(closeModal);
-    e.preventDefault();
+  const onSubmit = () => {
+    trigger(id, inputValue).then(() => {
+      refreshTree();
+      closeModal();
+    });
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <label htmlFor={"newName"}>{"New Node Name"}</label>
-      <input
-        name={"newName"}
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+    <Form
+      onSubmit={onSubmit}
+      bottom={
+        <Button type={"submit"} value={"Update Node"} loading={loading} />
+      }
+    >
+      <Field
+        label={"New Node Name"}
+        id={"newNodeName"}
+        onChange={setInputValue}
+        error={error}
       />
-      <button type={"submit"}>{"Submit"}</button>
-    </form>
+    </Form>
   );
 };
 

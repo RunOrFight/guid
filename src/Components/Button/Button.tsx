@@ -12,6 +12,7 @@ const Button: FC<IButtonProps> = ({
   className,
   danger,
   loading,
+  value,
   ...props
 }) => {
   return (
@@ -20,7 +21,7 @@ const Button: FC<IButtonProps> = ({
       {...props}
       className={clsx(classes.button, className, danger && classes.danger)}
     >
-      {children}
+      {children || value}
     </button>
   );
 };

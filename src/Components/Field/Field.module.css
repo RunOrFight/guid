@@ -13,8 +13,3 @@
     color: var(--color-gray-900);
 }
 
-.error {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
-    color: var(--color-red);
-}
