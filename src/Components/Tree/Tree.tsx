@@ -10,7 +10,6 @@ import {
 } from "./TreeContext.tsx";
 import { CreateTreeNode } from "./CreateTreeNode.tsx";
 import { ITreeItem } from "./ITreeItem.tsx";
-import { useAsync } from "../../Utils/UseAsync.ts";
 import { RenameTreeNode } from "./RenameTreeNode.tsx";
 import { DeleteTreeNode } from "./DeleteTreeNode.tsx";
 
@@ -42,7 +41,7 @@ const Node: FC<INodeProps> = ({ children, name, id, editable = false }) => {
         {name}
         {isSelected ? <CreateTreeNode id={id} /> : null}
         {isSelected && editable ? <RenameTreeNode id={id} name={name} /> : null}
-        {isSelected && editable ? <DeleteTreeNode id={id} /> : null}
+        {isSelected && editable ? <DeleteTreeNode id={id} name={name} /> : null}
       </div>
       {hasChildren && value ? (
         <div className={classes.nodeBody}>
@@ -56,18 +55,17 @@ const Node: FC<INodeProps> = ({ children, name, id, editable = false }) => {
 };
 
 const RootNode = () => {
-  const { getRootNode } = useTreeContext();
-  const { data, loading, error } = useAsync(getRootNode);
+  const { rootNode, treeIsLoading, treeError } = useTreeContext();
 
-  if (error) {
-    return error;
+  if (treeError) {
+    return treeError;
   }
 
-  if (loading) {
+  if (treeIsLoading) {
     return "...";
   }
 
-  return data ? <Node {...data} name={"Root"} /> : "No data";
+  return rootNode ? <Node {...rootNode} name={"Root"} /> : "No data";
 };
 
 const Tree: FC<ITreeApi> = ({

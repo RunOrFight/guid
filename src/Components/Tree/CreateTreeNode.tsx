@@ -5,29 +5,41 @@ import { useTreeContext } from "./TreeContext.tsx";
 import { FC, useState } from "react";
 import { ITreeItem } from "./ITreeItem.tsx";
 import { withStopPropagation } from "../../Utils/WithStopPropagation.ts";
+import classes from "./Tree.module.css";
+import { Button } from "../Button/Button.tsx";
+import { Field } from "../Field/Field.tsx";
+import { useAsync } from "../../Utils/UseAsync.ts";
+import { withPreventDefault } from "../../Utils/WithPreventDefault.ts";
 
 type TCreateTreeNodeFormProps = Pick<IModalContext, "closeModal"> &
   Pick<ITreeItem, "id">;
 
 const CreateTreeNodeForm = ({ closeModal, id }: TCreateTreeNodeFormProps) => {
-  const { createNode, getRootNode } = useTreeContext();
+  const { createNode, refreshTree } = useTreeContext();
+  const { trigger, error, loading } = useAsync(createNode);
 
   const [inputValue, setInputValue] = useState("");
 
-  const onSubmit = (e) => {
-    createNode(id, inputValue).then(getRootNode).then(closeModal);
-    e.preventDefault();
-  };
+  const onSubmit = withPreventDefault(() => {
+    trigger(id, inputValue).then(() => {
+      refreshTree();
+      closeModal();
+    });
+  });
 
   return (
-    <form onSubmit={onSubmit}>
-      <label htmlFor={"name"}>{"Name"}</label>
-      <input
-        name={"name"}
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+    <form onSubmit={onSubmit} className={classes.form}>
+      <Field
+        error={error}
+        id={"name"}
+        label={"Name"}
+        onChange={setInputValue}
       />
-      <button type={"submit"}>{"Submit"}</button>
+      <div className={classes.formBottom}>
+        <Button type={"submit"} disabled={loading}>
+          {"Create"}
+        </Button>
+      </div>
     </form>
   );
 };

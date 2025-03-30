@@ -14,6 +14,15 @@ interface IGetUserTreeResponse {
   children: IGetUserTreeResponse[];
 }
 
+const transformResponse = (res: Response) => {
+  if (res.ok) {
+    return "Ok";
+  }
+  return res
+    .json()
+    .then((json) => Promise.reject(json?.data?.message ?? "Something wrong"));
+};
+
 const HttpApi = {
   getUserTree: async (treeName: string): Promise<IGetUserTreeResponse> => {
     getUserTreeUrl.searchParams.set("treeName", treeName);
@@ -26,7 +35,7 @@ const HttpApi = {
     treeName: string,
     parentNodeId: number,
     nodeName: string,
-  ): Promise<boolean> => {
+  ): Promise<string> => {
     createUserTreeNodeUrl.searchParams.set("treeName", treeName);
     createUserTreeNodeUrl.searchParams.set(
       "parentNodeId",
@@ -36,31 +45,31 @@ const HttpApi = {
 
     return fetch(createUserTreeNodeUrl, {
       method: "POST",
-    }).then((res) => res.ok);
+    }).then(transformResponse);
   },
   renameUserTreeNode: async (
     treeName: string,
     nodeId: number,
     newNodeName: string,
-  ): Promise<boolean> => {
+  ): Promise<string> => {
     renameUserTreeNodeUrl.searchParams.set("treeName", treeName);
     renameUserTreeNodeUrl.searchParams.set("nodeId", nodeId.toString());
     renameUserTreeNodeUrl.searchParams.set("newNodeName", newNodeName);
 
     return fetch(renameUserTreeNodeUrl, {
       method: "POST",
-    }).then((res) => res.ok);
+    }).then(transformResponse);
   },
   deleteUserTreeNode: async (
     treeName: string,
     nodeId: number,
-  ): Promise<boolean> => {
+  ): Promise<string> => {
     deleteUserTreeNodeUrl.searchParams.set("treeName", treeName);
     deleteUserTreeNodeUrl.searchParams.set("nodeId", nodeId.toString());
 
     return fetch(deleteUserTreeNodeUrl, {
       method: "POST",
-    }).then((res) => res.ok);
+    }).then(transformResponse);
   },
 };
 

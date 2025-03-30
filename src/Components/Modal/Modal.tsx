@@ -32,7 +32,7 @@ const ModalContent = ({ renderTrigger, children, title }: IModalProps) => {
                     onClick={context.closeModal}
                   />
                 </div>
-                <div className={classes.modalBody}>{children(context)}</div>
+                {children(context)}
               </div>
             </div>,
             document.body,

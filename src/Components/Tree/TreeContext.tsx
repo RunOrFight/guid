@@ -3,9 +3,11 @@ import {
   FC,
   PropsWithChildren,
   useContext,
+  useEffect,
   useState,
 } from "react";
 import { ITreeItem } from "./ITreeItem.tsx";
+import { useAsync } from "../../Utils/UseAsync.ts";
 
 interface ITreeApi {
   getRootNode: () => Promise<ITreeItem>;
@@ -14,10 +16,14 @@ interface ITreeApi {
   deleteNode: (nodeId: number) => Promise<boolean>;
 }
 
-interface ITreeContext extends ITreeApi {
+interface ITreeContext extends Omit<ITreeApi, "getRootNode"> {
   setSelectedId: (id: number) => void;
   selectedId: number | null;
   checkIsIdSelected: (id: number) => boolean;
+  rootNode: ITreeItem | null;
+  treeIsLoading: boolean;
+  treeError: string | null;
+  refreshTree: () => void;
 }
 
 const TreeContext = createContext<ITreeContext | null>(null);
@@ -30,15 +36,23 @@ const TreeContextProvider: FC<PropsWithChildren<ITreeApi>> = ({
   deleteNode,
 }) => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
+  const { data, loading, error, trigger } = useAsync(getRootNode);
+
+  useEffect(() => {
+    trigger();
+  }, [trigger]);
 
   const value: ITreeContext = {
     setSelectedId,
     selectedId,
     checkIsIdSelected: (id) => selectedId === id,
     createNode,
-    getRootNode,
     renameNode,
     deleteNode,
+    refreshTree: trigger,
+    treeIsLoading: loading,
+    treeError: error,
+    rootNode: data,
   };
 
   return <TreeContext value={value}>{children}</TreeContext>;
