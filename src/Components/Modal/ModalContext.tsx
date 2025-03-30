@@ -1,37 +1,35 @@
-import {createContext, FC, PropsWithChildren, useContext} from "react";
-import {useBoolean} from "../../Utils/UseBoolean.ts";
+import { createContext, FC, PropsWithChildren, useContext } from "react";
+import { useBoolean } from "../../Utils/UseBoolean.ts";
 
 interface IModalContext {
-    openModal: () => void;
-    isModalOpened: boolean
-    closeModal: () => void;
+  openModal: () => void;
+  isModalOpened: boolean;
+  closeModal: () => void;
 }
 
 const ModalContext = createContext<IModalContext | null>(null);
 
 const useModalContext = () => {
-    const context = useContext(ModalContext);
+  const context = useContext(ModalContext);
 
-    if (!context) {
-        throw new Error('useModalContext must be used within ModalContextProvider')
-    }
+  if (!context) {
+    throw new Error("useModalContext must be used within ModalContextProvider");
+  }
 
-    return context;
-}
+  return context;
+};
 
-const ModalContextProvider: FC<PropsWithChildren> = ({children}) => {
-    const {value: isModalOpened, setTrue, setFalse} = useBoolean(false)
+const ModalContextProvider: FC<PropsWithChildren> = ({ children }) => {
+  const { value: isModalOpened, setTrue, setFalse } = useBoolean(false);
 
-    const value = {
-        isModalOpened,
-        openModal: setTrue,
-        closeModal: setFalse
-    }
+  const value = {
+    isModalOpened,
+    openModal: setTrue,
+    closeModal: setFalse,
+  };
 
-    return <ModalContext value={value}>
-        {children}
-    </ModalContext>
-}
+  return <ModalContext value={value}>{children}</ModalContext>;
+};
 
-export {ModalContextProvider, useModalContext}
-export type {IModalContext}
+export { ModalContextProvider, useModalContext };
+export type { IModalContext };

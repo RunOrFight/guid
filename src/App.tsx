@@ -1,7 +1,7 @@
-import {UserTree} from "./Components/UserTree/UserTree.tsx";
+import { UserTree } from "./Components/UserTree/UserTree.tsx";
 
 const App = () => {
-    return <UserTree/>
-}
+  return <UserTree />;
+};
 
-export {App}
+export { App };

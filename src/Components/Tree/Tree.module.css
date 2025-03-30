@@ -1,25 +1,26 @@
 .tree {
 }
 
-.node, .leaf {
-    padding-left: 16px;
+.node,
+.leaf {
+  padding-left: 16px;
 }
 
 .nodeHead {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 16px;
 }
 
 .selected {
-    background-color: rgba(128, 128, 128, 0.2);
+  background-color: rgba(128, 128, 128, 0.2);
 }
 
 .nodeBody {
-    display: flex;
-    flex-direction: column;
-    gap: .25rem;
-    padding: .25rem 0 .25rem .25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.25rem 0 0.25rem 0.25rem;
 }

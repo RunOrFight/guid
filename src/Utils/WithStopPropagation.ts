@@ -1,10 +1,12 @@
-import {MouseEventHandler} from "react";
+import { MouseEventHandler } from "react";
 
-const stopPropagation: MouseEventHandler = (e) => e.stopPropagation()
+const stopPropagation: MouseEventHandler = (e) => e.stopPropagation();
 
-const withStopPropagation = (callback: () => void): MouseEventHandler => (e) => {
-    stopPropagation(e)
-    callback()
-}
+const withStopPropagation =
+  (callback: () => void): MouseEventHandler =>
+  (e) => {
+    stopPropagation(e);
+    callback();
+  };
 
-export {withStopPropagation, stopPropagation}
+export { withStopPropagation, stopPropagation };
