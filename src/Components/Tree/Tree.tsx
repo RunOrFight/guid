@@ -12,6 +12,7 @@ import { CreateTreeNode } from "./Actions/CreateTreeNode.tsx";
 import { ITreeItem } from "./ITreeItem.tsx";
 import { RenameTreeNode } from "./Actions/RenameTreeNode.tsx";
 import { DeleteTreeNode } from "./Actions/DeleteTreeNode.tsx";
+import { Error } from "../Error/Error.tsx";
 
 interface INodeProps extends ITreeItem {
   editable?: boolean;
@@ -88,14 +89,18 @@ const RootNode = memo(() => {
   const { rootNode, treeIsLoading, treeError } = useTreeContext();
 
   if (treeError) {
-    return treeError;
+    return (
+      <div className={classes.node}>
+        <Error>{treeError}</Error>
+      </div>
+    );
   }
 
-  if (treeIsLoading) {
-    return "...";
+  if (treeIsLoading || !rootNode) {
+    return <div className={classes.node}>{"..."}</div>;
   }
 
-  return rootNode ? <Node {...rootNode} name={"Root"} /> : "No data";
+  return <Node {...rootNode} name={"Root"} />;
 });
 
 const Tree: FC<ITreeApi> = ({

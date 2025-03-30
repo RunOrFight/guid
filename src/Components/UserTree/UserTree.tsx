@@ -1,22 +1,62 @@
 import { HttpApi } from "../../Api/HttpApi.ts";
+import { memo, useCallback } from "react";
+import { Form } from "../Form/Form.tsx";
+import classes from "./UserTree.module.css";
+import { Field } from "../Field/Field.tsx";
 import { Tree } from "../Tree/Tree.tsx";
-import { toPlainComponent } from "../../Utils/ToPlainComponent.ts";
+import { Button } from "../Button/Button.tsx";
+import { useUserTreeName } from "./UseUserTreeName.tsx";
 
-const TREE_ID = "{C9232B85-AD10-459C-A44F-70CA30C60E5F}";
+interface IUserTreeApiProps {
+  treeName: string;
+}
 
-const getRootNode = HttpApi.getUserTree.bind(null, TREE_ID);
+const UserTreeApi = memo<IUserTreeApiProps>(({ treeName }) => {
+  const getRootNode = useCallback(
+    () => HttpApi.getUserTree(treeName),
+    [treeName],
+  );
 
-const createNode = HttpApi.createUserTreeNode.bind(null, TREE_ID);
+  const createNode = useCallback(
+    (parentNodeId: number, nodeName: string) =>
+      HttpApi.createUserTreeNode(treeName, parentNodeId, nodeName),
+    [treeName],
+  );
 
-const renameNode = HttpApi.renameUserTreeNode.bind(null, TREE_ID);
+  const renameNode = useCallback(
+    (nodeId: number, newNodeName: string) =>
+      HttpApi.renameUserTreeNode(treeName, nodeId, newNodeName),
+    [treeName],
+  );
 
-const deleteNode = HttpApi.deleteUserTreeNode.bind(null, TREE_ID);
+  const deleteNode = useCallback(
+    (nodeId: number) => HttpApi.deleteUserTreeNode(treeName, nodeId),
+    [treeName],
+  );
 
-const UserTree = toPlainComponent(Tree, {
-  createNode,
-  renameNode,
-  deleteNode,
-  getRootNode,
+  return (
+    <Tree
+      key={treeName}
+      getRootNode={getRootNode}
+      createNode={createNode}
+      renameNode={renameNode}
+      deleteNode={deleteNode}
+    />
+  );
 });
+
+const UserTree = () => {
+  const { treeName, onSubmit, inputRef } = useUserTreeName();
+  
+  return (
+    <>
+      <Form className={classes.showForm} onSubmit={onSubmit}>
+        <Field label={"Tree Name"} id={"treeName"} inputRef={inputRef} />
+        <Button type={"submit"} value={"Show"} />
+      </Form>
+      {treeName ? <UserTreeApi treeName={treeName} /> : null}
+    </>
+  );
+};
 
 export { UserTree };

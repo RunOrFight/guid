@@ -10,7 +10,7 @@ const useAsync = <Args extends unknown[], Response>(
   const trigger = useRef(
     (...args: Args) =>
       new Promise((resolve, reject) => {
-        setLoading(true);
+        setLoading(false);
 
         call(...args)
           .then((data) => {

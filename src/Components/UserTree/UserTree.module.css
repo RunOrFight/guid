@@ -1,0 +1,7 @@
+.showForm {
+    padding: 1rem;
+    max-width: 30rem;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 1rem;
+}

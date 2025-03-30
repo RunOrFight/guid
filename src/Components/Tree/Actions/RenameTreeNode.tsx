@@ -38,6 +38,7 @@ const RenameTreeNodeForm = ({
       }
     >
       <Field
+        inputValue={inputValue}
         label={"New Node Name"}
         id={"newNodeName"}
         onChange={setInputValue}
