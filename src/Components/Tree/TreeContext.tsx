@@ -5,6 +5,7 @@ interface ITreeApi {
     getRootNode: () => Promise<ITreeItem>
     createNode: (parentNodeId: number, nodeName: string) => Promise<boolean>
     renameNode: (nodeId: number, newNodeName: string) => Promise<boolean>
+    deleteNode: (nodeId: number) => Promise<boolean>
 }
 
 interface ITreeContext extends ITreeApi {
@@ -15,7 +16,13 @@ interface ITreeContext extends ITreeApi {
 
 const TreeContext = createContext<ITreeContext | null>(null);
 
-const TreeContextProvider: FC<PropsWithChildren<ITreeApi>> = ({children, createNode, getRootNode, renameNode}) => {
+const TreeContextProvider: FC<PropsWithChildren<ITreeApi>> = ({
+                                                                  children,
+                                                                  createNode,
+                                                                  getRootNode,
+                                                                  renameNode,
+                                                                  deleteNode
+                                                              }) => {
     const [selectedId, setSelectedId] = useState<number | null>(null)
 
     const value: ITreeContext = {
@@ -24,7 +31,8 @@ const TreeContextProvider: FC<PropsWithChildren<ITreeApi>> = ({children, createN
         checkIsIdSelected: (id) => selectedId === id,
         createNode,
         getRootNode,
-        renameNode
+        renameNode,
+        deleteNode
     }
 
     return <TreeContext value={value}>

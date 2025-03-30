@@ -40,6 +40,14 @@ const HttpApi = {
         return fetch(renameUserTreeNodeUrl, {
             method: "POST",
         }).then(res => res.ok);
+    },
+    deleteUserTreeNode: async (treeName: string, nodeId: number): Promise<boolean> => {
+        deleteUserTreeNodeUrl.searchParams.set("treeName", treeName);
+        deleteUserTreeNodeUrl.searchParams.set("nodeId", nodeId.toString());
+
+        return fetch(deleteUserTreeNodeUrl, {
+            method: "POST",
+        }).then(res => res.ok);
     }
 }
 
