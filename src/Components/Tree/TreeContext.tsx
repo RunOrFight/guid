@@ -4,6 +4,7 @@ import {ITreeItem} from "./ITreeItem.tsx";
 interface ITreeApi {
     getRootNode: () => Promise<ITreeItem>
     createNode: (parentNodeId: number, nodeName: string) => Promise<boolean>
+    renameNode: (nodeId: number, newNodeName: string) => Promise<boolean>
 }
 
 interface ITreeContext extends ITreeApi {
@@ -14,7 +15,7 @@ interface ITreeContext extends ITreeApi {
 
 const TreeContext = createContext<ITreeContext | null>(null);
 
-const TreeContextProvider: FC<PropsWithChildren<ITreeApi>> = ({children, createNode, getRootNode}) => {
+const TreeContextProvider: FC<PropsWithChildren<ITreeApi>> = ({children, createNode, getRootNode, renameNode}) => {
     const [selectedId, setSelectedId] = useState<number | null>(null)
 
     const value: ITreeContext = {
@@ -22,7 +23,8 @@ const TreeContextProvider: FC<PropsWithChildren<ITreeApi>> = ({children, createN
         selectedId,
         checkIsIdSelected: (id) => selectedId === id,
         createNode,
-        getRootNode
+        getRootNode,
+        renameNode
     }
 
     return <TreeContext value={value}>

@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {FileIcon, FolderIcon, PencilIcon, TrashIcon} from "lucide-react";
+import {FileIcon, FolderIcon, TrashIcon} from "lucide-react";
 import {useBoolean} from "../../Utils/UseBoolean.ts";
 import classes from "./Tree.module.css";
 import clsx from "clsx";
@@ -7,6 +7,7 @@ import {ITreeApi, TreeContextProvider, useTreeContext} from "./TreeContext.tsx";
 import {CreateTreeNode} from "./CreateTreeNode.tsx";
 import {ITreeItem} from "./ITreeItem.tsx";
 import {useAsync} from "../../Utils/UseAsync.ts";
+import {RenameTreeNode} from "./RenameTreeNode.tsx";
 
 const Node: FC<ITreeItem> = ({children, name, id}) => {
     const {toggle, value} = useBoolean(false)
@@ -25,7 +26,7 @@ const Node: FC<ITreeItem> = ({children, name, id}) => {
             {children.length > 0 ? <FolderIcon/> : <FileIcon/>}
             {name}
             {isSelected ? <CreateTreeNode id={id}/> : null}
-            {isSelected ? <PencilIcon size={"14"}/> : null}
+            {isSelected ? <RenameTreeNode id={id} name={name}/> : null}
             {isSelected ? <TrashIcon size={"14"}/> : null}
         </div>
         {
@@ -52,8 +53,8 @@ const RootNode = () => {
     return data ? <Node {...data} name={"Root"}/> : "No data"
 }
 
-const Tree: FC<ITreeApi> = ({createNode, getRootNode}) => {
-    return <TreeContextProvider createNode={createNode} getRootNode={getRootNode}>
+const Tree: FC<ITreeApi> = ({createNode, getRootNode, renameNode}) => {
+    return <TreeContextProvider createNode={createNode} getRootNode={getRootNode} renameNode={renameNode}>
         <div className={classes.tree}>
             <RootNode/>
         </div>

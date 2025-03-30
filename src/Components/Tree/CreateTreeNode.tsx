@@ -28,7 +28,6 @@ const CreateTreeNodeForm = ({closeModal, id}: TCreateTreeNodeFormProps) => {
 
 const renderTrigger = ({openModal}: IModalContext) => <PlusIcon size={"14"} onClick={withStopPropagation(openModal)}/>
 
-
 const CreateTreeNode: FC<Pick<ITreeItem, "id">> = ({id}) => {
     return <Modal renderTrigger={renderTrigger}>
         {({closeModal}: IModalContext) => <CreateTreeNodeForm closeModal={closeModal} id={id}/>}

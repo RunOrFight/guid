@@ -8,6 +8,9 @@ const getRootNode = () => HttpApi.getUserTree(TREE_ID)
 const createNode = (parentNodeId: number, nodeName: string) =>
     HttpApi.createUserTreeNode(TREE_ID, parentNodeId, nodeName)
 
-const UserTree = () => <Tree getRootNode={getRootNode} createNode={createNode}/>
+const renameNode = (nodeId: number, newNodeName: string) =>
+    HttpApi.renameUserTreeNode(TREE_ID, nodeId, newNodeName)
+
+const UserTree = () => <Tree getRootNode={getRootNode} createNode={createNode} renameNode={renameNode}/>
 
 export {UserTree}
