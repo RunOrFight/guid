@@ -1,14 +1,14 @@
-import { Modal } from "../Modal/Modal.tsx";
-import { IModalContext } from "../Modal/ModalContext.tsx";
+import { Modal } from "../../Modal/Modal.tsx";
+import { IModalContext } from "../../Modal/ModalContext.tsx";
 import { PlusIcon } from "lucide-react";
-import { useTreeContext } from "./TreeContext.tsx";
+import { useTreeContext } from "../TreeContext.tsx";
 import { FC, useState } from "react";
-import { ITreeItem } from "./ITreeItem.tsx";
-import { withStopPropagation } from "../../Utils/WithStopPropagation.ts";
-import { Button } from "../Button/Button.tsx";
-import { Field } from "../Field/Field.tsx";
-import { useAsync } from "../../Utils/UseAsync.ts";
-import { Form } from "../Form/Form.tsx";
+import { ITreeItem } from "../ITreeItem.tsx";
+import { withStopPropagation } from "../../../Utils/WithStopPropagation.ts";
+import { Button } from "../../Button/Button.tsx";
+import { Field } from "../../Field/Field.tsx";
+import { useAsync } from "../../../Utils/UseAsync.ts";
+import { Form } from "../../Form/Form.tsx";
 
 type TCreateTreeNodeFormProps = Pick<IModalContext, "closeModal"> &
   Pick<ITreeItem, "id">;
@@ -44,7 +44,7 @@ const CreateTreeNodeForm = ({ closeModal, id }: TCreateTreeNodeFormProps) => {
 };
 
 const renderTrigger = ({ openModal }: IModalContext) => (
-  <PlusIcon size={"14"} onClick={withStopPropagation(openModal)} />
+  <PlusIcon size={"1rem"} onClick={withStopPropagation(openModal)} />
 );
 
 const CreateTreeNode: FC<Pick<ITreeItem, "id">> = ({ id }) => {

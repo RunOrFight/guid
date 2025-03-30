@@ -1,14 +1,14 @@
-import { Modal } from "../Modal/Modal.tsx";
-import { IModalContext } from "../Modal/ModalContext.tsx";
+import { Modal } from "../../Modal/Modal.tsx";
+import { IModalContext } from "../../Modal/ModalContext.tsx";
 import { PencilIcon } from "lucide-react";
-import { useTreeContext } from "./TreeContext.tsx";
+import { useTreeContext } from "../TreeContext.tsx";
 import { FC, useState } from "react";
-import { ITreeItem } from "./ITreeItem.tsx";
-import { withStopPropagation } from "../../Utils/WithStopPropagation.ts";
-import { Form } from "../Form/Form.tsx";
-import { Field } from "../Field/Field.tsx";
-import { Button } from "../Button/Button.tsx";
-import { useAsync } from "../../Utils/UseAsync.ts";
+import { ITreeItem } from "../ITreeItem.tsx";
+import { withStopPropagation } from "../../../Utils/WithStopPropagation.ts";
+import { Form } from "../../Form/Form.tsx";
+import { Field } from "../../Field/Field.tsx";
+import { Button } from "../../Button/Button.tsx";
+import { useAsync } from "../../../Utils/UseAsync.ts";
 
 type TRenameTreeNodeFormProps = Pick<IModalContext, "closeModal"> &
   Pick<ITreeItem, "id" | "name">;
@@ -48,7 +48,7 @@ const RenameTreeNodeForm = ({
 };
 
 const renderTrigger = ({ openModal }: IModalContext) => (
-  <PencilIcon size={"14"} onClick={withStopPropagation(openModal)} />
+  <PencilIcon size={"1rem"} onClick={withStopPropagation(openModal)} />
 );
 
 const RenameTreeNode: FC<Pick<ITreeItem, "id" | "name">> = ({ id, name }) => {

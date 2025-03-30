@@ -35,3 +35,7 @@
 .headIcon {
     cursor: pointer;
 }
+
+body:has(.modal) {
+    overflow: hidden;
+}

@@ -11,9 +11,9 @@ import { useAsync } from "../../Utils/UseAsync.ts";
 
 interface ITreeApi {
   getRootNode: () => Promise<ITreeItem>;
-  createNode: (parentNodeId: number, nodeName: string) => Promise<boolean>;
-  renameNode: (nodeId: number, newNodeName: string) => Promise<boolean>;
-  deleteNode: (nodeId: number) => Promise<boolean>;
+  createNode: (parentNodeId: number, nodeName: string) => Promise<string>;
+  renameNode: (nodeId: number, newNodeName: string) => Promise<string>;
+  deleteNode: (nodeId: number) => Promise<string>;
 }
 
 interface ITreeContext extends Omit<ITreeApi, "getRootNode"> {

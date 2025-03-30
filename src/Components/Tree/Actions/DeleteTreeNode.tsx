@@ -1,15 +1,15 @@
-import { Modal } from "../Modal/Modal.tsx";
-import { IModalContext } from "../Modal/ModalContext.tsx";
+import { Modal } from "../../Modal/Modal.tsx";
+import { IModalContext } from "../../Modal/ModalContext.tsx";
 import { TrashIcon } from "lucide-react";
-import { useTreeContext } from "./TreeContext.tsx";
+import { useTreeContext } from "../TreeContext.tsx";
 import { FC } from "react";
-import { ITreeItem } from "./ITreeItem.tsx";
-import { withStopPropagation } from "../../Utils/WithStopPropagation.ts";
-import { useAsync } from "../../Utils/UseAsync.ts";
-import { Button } from "../Button/Button.tsx";
-import classes from "./Tree.module.css";
-import { Form } from "../Form/Form.tsx";
-import { Error } from "../Error/Error.tsx";
+import { ITreeItem } from "../ITreeItem.tsx";
+import { withStopPropagation } from "../../../Utils/WithStopPropagation.ts";
+import { useAsync } from "../../../Utils/UseAsync.ts";
+import { Button } from "../../Button/Button.tsx";
+import classes from "../Tree.module.css";
+import { Form } from "../../Form/Form.tsx";
+import { Error } from "../../Error/Error.tsx";
 
 type TDeleteTreeNodeFormProps = Pick<IModalContext, "closeModal"> &
   Pick<ITreeItem, "id" | "name">;
@@ -49,7 +49,7 @@ const DeleteTreeNodeForm = ({
 };
 
 const renderTrigger = ({ openModal }: IModalContext) => (
-  <TrashIcon size={"14"} onClick={withStopPropagation(openModal)} />
+  <TrashIcon size={"1rem"} onClick={withStopPropagation(openModal)} />
 );
 
 const DeleteTreeNode: FC<Pick<ITreeItem, "id" | "name">> = ({ id, name }) => {

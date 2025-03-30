@@ -1,7 +1,8 @@
 import { HttpApi } from "../../Api/HttpApi.ts";
 import { Tree } from "../Tree/Tree.tsx";
+import { toPlainComponent } from "../../Utils/ToPlainComponent.ts";
 
-const TREE_ID = "d380ed42-75e7-4116-8b84-300937cc3260";
+const TREE_ID = "{C9232B85-AD10-459C-A44F-70CA30C60E5F}";
 
 const getRootNode = HttpApi.getUserTree.bind(null, TREE_ID);
 
@@ -11,13 +12,11 @@ const renameNode = HttpApi.renameUserTreeNode.bind(null, TREE_ID);
 
 const deleteNode = HttpApi.deleteUserTreeNode.bind(null, TREE_ID);
 
-const UserTree = () => (
-  <Tree
-    getRootNode={getRootNode}
-    createNode={createNode}
-    renameNode={renameNode}
-    deleteNode={deleteNode}
-  />
-);
+const UserTree = toPlainComponent(Tree, {
+  createNode,
+  renameNode,
+  deleteNode,
+  getRootNode,
+});
 
 export { UserTree };
